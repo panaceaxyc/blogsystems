@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blogsystem.mapper.ReplyMapper" >
+
+    <!--插入-->
+    <insert id="insert" parameterType="com.blogsystem.entity.Reply">
+        insert into reply(commentid, replyid, content, articleid,date)
+         values (#{commentid},#{replyid},#{content},#{articleid},#{date})
+    </insert>
+    <!--查询二级评论-->
+    <select id="selectReplyByReplyId" resultType="com.blogsystem.entity.Reply">
+        SELECT * FROM reply r, admin a WHERE r.commentid = a.id AND r.replyid = #{replyid}
+    </select>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blogsystem.mapper.LableMapper" >
+    <insert id="insertLable">
+        insert into label(lablename, lableurl)
+        values (#{lableName},#{lableUrl})
+    </insert>
+    <update id="updateLable">
+        update label set lablename = #{lableName}, lableurl=#{lableUrl} where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from label where id = #{id}
+    </delete>
+
+    <select id="selectAllLable" resultType="com.blogsystem.entity.Lable">
+        select * from label
+    </select>
+    <select id="getLableById" resultType="com.blogsystem.entity.Lable">
+        select * from label l where l.id = #{id}
+    </select>
+
+
+</mapper>

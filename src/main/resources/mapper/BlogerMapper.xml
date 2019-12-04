@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blogsystem.mapper.BlogerMapper" >
+    <update id="update">
+        update bloger set name =#{name},zy=#{zy},email=#{email},address=#{address}
+        where id = #{id}
+    </update>
+
+    <select id="getBlogerById" resultType="com.blogsystem.entity.Bloger">
+        select * from bloger where id = 1
+    </select>
+</mapper>

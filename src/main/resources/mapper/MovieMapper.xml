@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blogsystem.mapper.MovieMapper" >
+    <insert id="insertMovie">
+        insert into movie(movietitle, movieinfo, moviecontent, categoryid, createdate, photo, userid) VALUES
+      (#{movietitle},#{movieinfo},#{moviecontent},#{categoryid},#{createdate},#{photo},#{userid})
+    </insert>
+    <delete id="delMovie">
+        delete  from movie where id = #{id}
+    </delete>
+
+    <select id="queryMovies" resultType="com.blogsystem.entity.Movie">
+         SELECT * FROM movie m , admin a,category c
+         WHERE m.categoryid = c.id AND m.userid = a.id
+    </select>
+    <select id="queryMoviesByCategoryId" resultType="com.blogsystem.entity.Movie">
+         SELECT * FROM movie m , admin a,category c
+        WHERE m.categoryid = c.id AND m.userid = a.id AND c.id =#{categoryId}
+    </select>
+    <select id="getMovieById" resultType="com.blogsystem.entity.Movie">
+         SELECT * FROM movie m , admin a,category c
+        WHERE m.categoryid = c.id AND m.userid = a.id AND m.id = #{id}
+    </select>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.blogsystem.entity.Movie" >
+        update movie
+        <set >
+            <if test="movietitle != null" >
+                movietitle = #{movietitle,jdbcType=VARCHAR},
+            </if>
+
+            <if test="movieinfo != null" >
+                movieinfo = #{movieinfo,jdbcType=VARCHAR},
+            </if>
+
+            <if test="moviecontent != null" >
+                moviecontent = #{moviecontent,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryid != null" >
+                categoryid = #{categoryid,jdbcType=INTEGER},
+            </if>
+            <if test="createdate != null" >
+                createdate = #{createdate,jdbcType=DATE},
+            </if>
+            <if test="photo != null" >
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="userid != null" >
+                userid = #{userid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

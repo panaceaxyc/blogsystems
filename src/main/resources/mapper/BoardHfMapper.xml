@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blogsystem.mapper.BoardHfMapper" >
+
+
+    <select id="getBoardById" resultType="com.blogsystem.entity.BoardHf">
+         SELECT *FROM board b
+         INNER JOIN boardhf h
+         ON b.id = h.boardid
+          WHERE b.id = #{boardid}
+    </select>
+
+
+</mapper>

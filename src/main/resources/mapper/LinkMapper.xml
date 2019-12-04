@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blogsystem.mapper.LinkMapper" >
+    <insert id="insertLink">
+        insert into link(linkname, linkurl) VALUES (#{linkName},#{linkUrl})
+    </insert>
+    <update id="updateLink">
+        update link set linkname = #{linkName},linkurl=#{linkUrl}
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete  from link where id = #{id}
+    </delete>
+    <select id="selectAllLinks" resultType="com.blogsystem.entity.Link">
+
+        select * from link
+    </select>
+    <select id="getLinkById" resultType="com.blogsystem.entity.Link">
+        select *from link where id = #{id}
+    </select>
+</mapper>

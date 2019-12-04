@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blogsystem.mapper.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.blogsystem.entity.Comment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="article_id" property="articleId" jdbcType="BIGINT" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.blogsystem.entity.Comment" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, article_id, date, name, email
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+
+  <select id="queryAll" resultMap="ResultMapWithBLOBs"  >
+    SELECT * FROM COMMENT c INNER JOIN admin a  ON c.userid = a.id WHERE c.article_id =  #{article_id}
+    ORDER BY c.id DESC
+    LIMIT #{offset}, #{limit}
+  </select>
+
+  <select id="countAllNum" resultType="java.lang.Integer">
+    SELECT count(*) FROM comment
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+
+  <insert id="insert" parameterType="com.blogsystem.entity.Comment" >
+    insert into comment (article_id, content, date, userid)
+    values ( #{articleId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR},#{date,jdbcType=TIMESTAMP},
+        #{userid,jdbcType=BIGINT}
+      )
+  </insert>
+
+
+
+
+  <insert id="insertSelective" parameterType="com.blogsystem.entity.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blogsystem.entity.Comment" >
+    update comment
+    <set >
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.blogsystem.entity.Comment" >
+    update comment
+    set article_id = #{articleId,jdbcType=BIGINT},
+      date = #{date,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blogsystem.entity.Comment" >
+    update comment
+    set article_id = #{articleId,jdbcType=BIGINT},
+      date = #{date,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
